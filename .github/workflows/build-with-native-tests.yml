@@ -41,7 +41,7 @@ jobs:
                 VERSION=$((grep -w 'version' | cut -d= -f2) < gradle.properties | rev | cut --complement -d- -f1 | rev)
                 echo "UPDATED_VERSION=$VERSION-$startTime-$latestCommit" >> $GITHUB_OUTPUT
                 sed -i "s/version=\(.*\)/version=$UPDATED_VERSION/g" gradle.properties
-                ./gradlew clean build -x check publishToMavenLocal --stacktrace --scan
+                ./gradlew clean build -x check -x test publishToMavenLocal --stacktrace --scan
 
             - name: Checkout Repository
               uses: actions/checkout@v2
