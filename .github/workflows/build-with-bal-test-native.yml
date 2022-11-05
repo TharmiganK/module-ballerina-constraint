@@ -23,7 +23,7 @@ on:
 
 jobs:
     ubuntu-build-with-bal-test-native:
-        name: Build with Bal Test Native on Ubuntu
+        name: Build with bal test native on Ubuntu
         if: ${{ inputs.build_envs != 'Windows' }}
         runs-on: ubuntu-latest
 
@@ -77,7 +77,7 @@ jobs:
                   ./gradlew clean build -PbalNativeTest
 
     windows-build-with-bal-test-native:
-        name: Build with Bal Test Native on Windows
+        name: Build with bal test native on Windows
         if: ${{ inputs.build_envs != 'Ubuntu' }}
         runs-on: windows-latest
 
