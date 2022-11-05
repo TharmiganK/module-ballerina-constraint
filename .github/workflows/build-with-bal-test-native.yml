@@ -63,7 +63,7 @@ jobs:
               if: ${{ inputs.lang_version == '' }}
               run: |
                   perl -pi -e "s/^\s*version=.*/version=${{ env.BALLERINA_LANG_VERSION }}/" gradle.properties
-                  ./gradlew build -x check -x test publishToMavenLocal
+                  ./gradlew clean build -x check -x test publishToMavenLocal
 
             - name: Checkout Module Repository
               uses: actions/checkout@v3
@@ -74,7 +74,7 @@ jobs:
                   packagePAT: ${{ secrets.GITHUB_TOKEN }}
               run: |
                   perl -pi -e "s/^\s*ballerinaLangVersion=.*/ballerinaLangVersion=${{ env.BALLERINA_LANG_VERSION }}/" gradle.properties
-                  ./gradlew build -PbalNativeTest
+                  ./gradlew clean build -PbalNativeTest
 
     windows-build-with-bal-test-native:
         name: Build with bal test native on Windows
@@ -115,7 +115,7 @@ jobs:
               if: ${{ inputs.lang_version == '' }}
               run: |
                   perl -pi -e "s/^\s*version=.*/version=${{ env.BALLERINA_LANG_VERSION }}/" gradle.properties
-                  ./gradlew.bat build -x check -x test publishToMavenLocal
+                  ./gradlew.bat clean build -x check -x test publishToMavenLocal
 
             - name: Checkout Module Repository
               uses: actions/checkout@v3
@@ -126,4 +126,4 @@ jobs:
                   packagePAT: ${{ secrets.GITHUB_TOKEN }}
               run: |
                   perl -pi -e "s/^\s*ballerinaLangVersion=.*/ballerinaLangVersion=${{ env.BALLERINA_LANG_VERSION }}/" gradle.properties
-                  ./gradlew.bat build -PbalNativeTest
+                  ./gradlew.bat clean build -PbalNativeTest
