@@ -20,6 +20,10 @@ on:
                 description: Ballerina Lang Version (If given ballerina lang buid will be skipped)
                 required: false
                 default: ''
+            native_image_options:
+                description: Default native-image options
+                required: false
+                default: ''
 
 jobs:
     ubuntu-build-with-bal-test-native:
@@ -39,6 +43,7 @@ jobs:
             - name: Check GraalVM installation
               run: |
                   echo "GRAALVM_HOME: ${{ env.GRAALVM_HOME }}"
+                  echo "JAVA_HOME: ${{ env.JAVA_HOME }}"
                   native-image --version
 
             - name: Checkout Ballerina Lang Repository
@@ -57,7 +62,7 @@ jobs:
                       LANG_VERSION=$VERSION-NATIVE
                   fi
                   echo "BALLERINA_LANG_VERSION=$LANG_VERSION" >> $GITHUB_ENV
-                  echo "BALLERINA_LANG_VERSION=$LANG_VERSION"
+                  echo "BALLERINA_LANG_VERSION: $LANG_VERSION"
 
             - name: Build Ballerina Lang
               if: ${{ inputs.lang_version == '' }}
@@ -67,6 +72,14 @@ jobs:
 
             - name: Checkout Module Repository
               uses: actions/checkout@v3
+
+            - name: Set default native-image options
+              if: ${{  inputs.native_image_options != '' }}
+              run: |
+                  CURRENT_DIR=$(pwd)
+                  echo "NativeImageArgs = ${{ inputs.native_image_options }}" > default_native.properties
+                  echo "NATIVE_IMAGE_CONFIG_FILE=$CURRENT_DIR/default_native.properties" >> $GITHUB_ENV
+                  echo "NATIVE_IMAGE_CONFIG_FILE: $CURRENT_DIR/default_native.properties"
 
             - name: Build with Gradle
               env:
@@ -109,7 +122,7 @@ jobs:
                   $VERSION = $properties.'version'.split("-",2)[0]
                   $LANG_VERSION = ("${{ inputs.lang_version }}" -eq "true") ? "${{ inputs.lang_version }}" : $VERSION + "-NATIVE"
                   "BALLERINA_LANG_VERSION=$LANG_VERSION" >> $env:GITHUB_ENV
-                  Write-Output "BALLERINA_LANG_VERSION = $LANG_VERSION"
+                  Write-Output "BALLERINA_LANG_VERSION: $LANG_VERSION"
 
             - name: Configure Pagefile
               if: ${{ inputs.lang_version == '' }}
@@ -127,6 +140,16 @@ jobs:
 
             - name: Checkout Module Repository
               uses: actions/checkout@v3
+
+            - name: Set default native-image options
+              if: ${{  inputs.native_image_options != '' }}
+              run: |
+                  $CURRENT_DIR = (Get-Location).tostring()
+                  $DEFAULT_PROPS = $CURRENT_DIR + "\" + "default_native.properties"
+                  $create_file = New-Item $DEFAULT_PROPS
+                  Set-Content $DEFAULT_PROPS "NativeImageArgs = ${{ inputs.native_image_options }}"
+                  "NATIVE_IMAGE_CONFIG_FILE=$DEFAULT_PROPS" >> $env:GITHUB_ENV
+                  Write-Output "NATIVE_IMAGE_CONFIG_FILE: $DEFAULT_PROPS"
 
             - name: Build with Gradle
               env:
