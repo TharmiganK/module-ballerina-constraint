@@ -39,6 +39,7 @@ jobs:
                   java-version: '11'
                   components: 'native-image'
                   github-token: ${{ secrets.GITHUB_TOKEN }}
+                  cache: 'gradle'
 
             - name: Check GraalVM installation
               run: |
@@ -102,6 +103,7 @@ jobs:
                   java-version: '11'
                   components: 'native-image'
                   github-token: ${{ secrets.GITHUB_TOKEN }}
+                  cache: 'gradle'
 
             - name: Check GraalVM installation
               run: |
