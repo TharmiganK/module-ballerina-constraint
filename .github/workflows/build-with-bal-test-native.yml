@@ -25,7 +25,7 @@ on:
                 required: false
                 default: ''
     schedule:
-        -   cron: '30 18 * * *'
+        -   cron: '30 04 * * *'
 
 jobs:
     ubuntu-build-with-bal-test-native:
