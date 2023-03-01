@@ -19,6 +19,7 @@ on:
         -   cron: '30 18 * * *'
     pull_request:
         branches: main
+        types: ['labeled']
 
 jobs:
     call_stdlib_workflow:
