@@ -18,8 +18,9 @@ on:
     schedule:
         -   cron: '30 18 * * *'
     pull_request:
-        branches: main
-        types: ['labeled']
+        branches: 
+            - main
+        types: [labeled, synchronize, reopened]
 
 jobs:
     call_stdlib_workflow:
