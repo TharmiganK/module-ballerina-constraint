@@ -91,7 +91,13 @@ jobs:
             
             - name: Delete "Dependencies.toml" files
               if: ${{ inputs.delete_dependencies_toml }}
-              run: find ./ballerina ./ballerina-tests -type f -name "Dependencies.toml" -exec rm {} \;
+              run: |
+                  if [ -d "./ballerina" ]; then
+                      find ./ballerina -type f -name "Dependencies.toml" -exec rm {} \; ;
+                  fi
+                  if [ -d "./ballerina-tests" ]; then
+                      find ./ballerina-tests -type f -name "Dependencies.toml" -exec rm {} \; ; 
+                  fi
             
             - name: Build with Gradle
               env:
@@ -165,7 +171,13 @@ jobs:
             
             - name: Delete "Dependencies.toml" files
               if: ${{ inputs.delete_dependencies_toml }}
-              run: find ./ballerina ./ballerina-tests -type f -name "Dependencies.toml" -exec rm {} \;
+              run: |
+                  if [ -d "./ballerina" ]; then
+                      find ./ballerina -type f -name "Dependencies.toml" -exec rm {} \; ;
+                  fi
+                  if [ -d "./ballerina-tests" ]; then
+                      find ./ballerina-tests -type f -name "Dependencies.toml" -exec rm {} \; ; 
+                  fi
                   
             - name: Build with Gradle
               env:
