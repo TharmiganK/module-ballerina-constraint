@@ -20,7 +20,7 @@ on:
                 required: false
                 default: "['rabbitmq', 'nats', 'kafka']"
             delete_dependencies_toml:
-                description: Delete `Dependencies.toml` files
+                description: Delete "Dependencies.toml" files
                 required: false
                 type: boolean
                 default: false
@@ -89,9 +89,9 @@ jobs:
                   echo CONSTRAINTVERSION=$CONSTRAINT_VERSION
                   sed -i "s/stdlibConstraintVersion=\(.*\)/stdlibConstraintVersion=$CONSTRAINT_VERSION/g" gradle.properties
             
-            - name: Delete `Dependencies.toml` files
+            - name: Delete "Dependencies.toml" files
               if: ${{ inputs.delete_dependencies_toml }}
-              run: find . -type f -name "Dependencies.toml" -exec rm {} +
+              run: find ./ballerina ./ballerina-tests -type f -name "Dependencies.toml" -exec rm {} \;
             
             - name: Build with Gradle
               env:
@@ -163,9 +163,9 @@ jobs:
                   echo CONSTRAINTVERSION=$CONSTRAINT_VERSION
                   sed -i "s/stdlibConstraintVersion=\(.*\)/stdlibConstraintVersion=$CONSTRAINT_VERSION/g" gradle.properties
             
-            - name: Delete `Dependencies.toml` files
+            - name: Delete "Dependencies.toml" files
               if: ${{ inputs.delete_dependencies_toml }}
-              run: find . -type f -name "Dependencies.toml" -exec rm {} +
+              run: find ./ballerina ./ballerina-tests -type f -name "Dependencies.toml" -exec rm {} \;
                   
             - name: Build with Gradle
               env:
