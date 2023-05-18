@@ -90,7 +90,7 @@ jobs:
                   sed -i "s/stdlibConstraintVersion=\(.*\)/stdlibConstraintVersion=$CONSTRAINT_VERSION/g" gradle.properties
             
             - name: Delete `Dependencies.toml` files
-              if: ${{ delete_dependencies_toml }}
+              if: ${{ inputs.delete_dependencies_toml }}
               run: find . -type f -name "Dependencies.toml" -exec rm {}
             
             - name: Build with Gradle
@@ -164,7 +164,7 @@ jobs:
                   sed -i "s/stdlibConstraintVersion=\(.*\)/stdlibConstraintVersion=$CONSTRAINT_VERSION/g" gradle.properties
             
             - name: Delete `Dependencies.toml` files
-              if: ${{ delete_dependencies_toml }}
+              if: ${{ inputs.delete_dependencies_toml }}
               run: find . -type f -name "Dependencies.toml" -exec rm {}
                   
             - name: Build with Gradle
