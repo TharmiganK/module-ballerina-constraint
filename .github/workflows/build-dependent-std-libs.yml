@@ -91,7 +91,7 @@ jobs:
             
             - name: Delete `Dependencies.toml` files
               if: ${{ inputs.delete_dependencies_toml }}
-              run: find . -type f -name "Dependencies.toml" -exec rm {}
+              run: find . -type f -name "Dependencies.toml" -exec rm {} +
             
             - name: Build with Gradle
               env:
@@ -165,7 +165,7 @@ jobs:
             
             - name: Delete `Dependencies.toml` files
               if: ${{ inputs.delete_dependencies_toml }}
-              run: find . -type f -name "Dependencies.toml" -exec rm {}
+              run: find . -type f -name "Dependencies.toml" -exec rm {} +
                   
             - name: Build with Gradle
               env:
