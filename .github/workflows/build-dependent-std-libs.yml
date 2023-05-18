@@ -19,6 +19,11 @@ on:
                 description: Dependent Ballerina extended modules
                 required: false
                 default: "['rabbitmq', 'nats', 'kafka']"
+            delete_dependencies_toml:
+                description: Delete `Dependencies.toml` files
+                required: false
+                type: boolean
+                default: false
 
 jobs:
     build-ballerina-modules:
@@ -83,12 +88,18 @@ jobs:
                   fi
                   echo CONSTRAINTVERSION=$CONSTRAINT_VERSION
                   sed -i "s/stdlibConstraintVersion=\(.*\)/stdlibConstraintVersion=$CONSTRAINT_VERSION/g" gradle.properties
+            
+            - name: Delete `Dependencies.toml` files
+              if: ${{ delete_dependencies_toml }}
+              run: find . -type f -name "Dependencies.toml" -exec rm {}
+            
             - name: Build with Gradle
               env:
                   packageUser: ${{ github.actor }}
                   packagePAT: ${{ secrets.GITHUB_TOKEN }}
               run: |
                   ./gradlew clean build
+                  
     build-ballerinax-modules:
         if: inputs.ballerinax_modules != ''
         name: Build Ballerina Extended Module
@@ -151,6 +162,11 @@ jobs:
                   fi
                   echo CONSTRAINTVERSION=$CONSTRAINT_VERSION
                   sed -i "s/stdlibConstraintVersion=\(.*\)/stdlibConstraintVersion=$CONSTRAINT_VERSION/g" gradle.properties
+            
+            - name: Delete `Dependencies.toml` files
+              if: ${{ delete_dependencies_toml }}
+              run: find . -type f -name "Dependencies.toml" -exec rm {}
+                  
             - name: Build with Gradle
               env:
                   packageUser: ${{ github.actor }}
